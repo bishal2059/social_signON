@@ -1,17 +1,19 @@
 const axios = require("axios");
+const { config } = require("../config");
+const queryString = require("node:querystring");
 
 const getGoogleToken = async function (code) {
   const url = "https://oauth2.googleapis.com/token";
   const values = {
     code,
-    redirect_uri: process.env.REDIRECT_URL,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    redirect_uri: config.REDIRECT_URL,
+    client_id: config.CLIENT_ID,
+    client_secret: config.CLIENT_SECRET,
     grant_type: "authorization_code",
   };
   console.log(values);
   try {
-    const res = await axios.post(url, JSON.stringify(values), {
+    const res = await axios.post(url, queryString.stringify(values), {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
