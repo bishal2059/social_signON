@@ -11,7 +11,7 @@ const getGoogleToken = async function (code) {
     client_secret: config.CLIENT_SECRET,
     grant_type: "authorization_code",
   };
-  console.log(values);
+  // console.log(values);
   try {
     const res = await axios.post(url, queryString.stringify(values), {
       headers: {
