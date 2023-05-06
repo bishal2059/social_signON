@@ -14,4 +14,23 @@ const verifyToken = async function (token) {
   return user;
 };
 
-module.exports = { verifyToken };
+const verifyAccessToken = async function (token) {
+  try {
+    const { sub } = jwt.verify(token, config.PRIVATE_KEY);
+    return sub;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Access Token unverified!!");
+  }
+};
+const verifyRefreshToken = async function (token) {
+  try {
+    const { sub } = jwt.verify(token, config.PRIVATE_KEY);
+    return sub;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Access Token unverified!!");
+  }
+};
+
+module.exports = { verifyToken, verifyAccessToken, verifyRefreshToken };

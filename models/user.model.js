@@ -14,6 +14,17 @@ const upsertUser = async function (user) {
   }
 };
 
+const getUser = async function (sub) {
+  try {
+    const user = await UserModel.findOne({ sub: sub }, { _id: 0, __v: 0 });
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw new Error("User not Found");
+  }
+};
+
 module.exports = {
   upsertUser,
+  getUser,
 };
