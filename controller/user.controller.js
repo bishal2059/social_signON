@@ -9,6 +9,7 @@ const httpUser = async function (req, res, next) {
   const { access_token, refresh_token } = req.cookies;
   try {
     let userID, user;
+    if (!access_token && !refresh_token) throw new Error("Unautheticated");
     if (!access_token) {
       userID = await verifyRefreshToken(refresh_token);
       user = await getUser(userID);
@@ -20,9 +21,13 @@ const httpUser = async function (req, res, next) {
       userID = await verifyAccessToken(access_token);
       user = await getUser(userID);
     }
-    return res.status(200).json(user);
+    return res.status(200).render("user", {
+      name: user.name,
+      email: user.email,
+      picture: user.picture,
+    });
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     next();
   }
 };

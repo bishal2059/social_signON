@@ -24,9 +24,7 @@ const callbackHandler = async function (req, res, next) {
     if (!user.email_verified) {
       return res
         .status(403)
-        .sendFile(
-          path.join(__dirname, "..", "views", "markup", "unverified.html")
-        );
+        .render("noauth", { message: "Email Unverified!", code: "403" });
     }
     const userCode = await upsertUser({
       email: user.email,
